@@ -2,10 +2,10 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-module "vpc" {
+module "transit" {
   source = "../../"
 
-  name = "simple-example"
+  name = "transit-example"
 
   cidr = "10.0.0.0/16"
 
@@ -13,17 +13,21 @@ module "vpc" {
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 
-  assign_generated_ipv6_cidr_block = true
+  assign_generated_ipv6_cidr_block = false
 
   enable_nat_gateway = true
   single_nat_gateway = true
 
-  create_tgw                 = "true"
+  create_tgw                 = true
   subnet_type_tgw_attachment = "private"
   cidr_tgw                   = ["10.0.0.0/8"]
 
   public_subnet_tags = {
     Name = "public"
+  }
+
+  private_subnet_tags = {
+    Name = "private"
   }
 
   tags = {
@@ -32,10 +36,12 @@ module "vpc" {
   }
 
   vpc_tags = {
-    Name = "vpc-name"
+    Name = "transit-tgw"
   }
 
   tgw_tags = {
-    Name = "tgw-name"
+    Name = "tgw"
   }
 }
+
+
