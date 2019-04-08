@@ -83,10 +83,6 @@ module "spoke" {
   subnet_type_tgw_attachment = "private"
   cidr_tgw                   = ["10.0.0.0/8", "0.0.0.0/0"]
 
-  public_subnet_tags = {
-    Name = "public"
-  }
-
   private_subnet_tags = {
     Name = "private"
   }
